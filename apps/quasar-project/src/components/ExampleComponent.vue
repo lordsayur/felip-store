@@ -1,36 +1,26 @@
 <template>
   <div>
-    <p>{{ title }}</p>
-    <ul>
-      <li v-for="todo in todos" :key="todo.id" @click="increment">
-        {{ todo.id }} - {{ todo.content }}
-      </li>
-    </ul>
-    <p>Count: {{ todoCount }} / {{ meta.totalCount }}</p>
-    <p>Active: {{ active ? 'yes' : 'no' }}</p>
-    <p>Clicks on todos: {{ clickCount }}</p>
+    <p>New Products</p>
+
+    <q-card v-for="product in products" :key="product.id" class="my-card">
+      <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
+        <div class="absolute-bottom text-h6">{{ product.name }}</div>
+      </q-img>
+
+      <q-card-section>
+        {{ product.price }}
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { Todo, Meta } from '@felip-store/core';
+import { Product } from '@felip-store/core';
 
 interface Props {
-  title: string;
-  todos?: Todo[];
-  meta: Meta;
-  active: boolean;
+  products?: Product[];
 }
 const props = withDefaults(defineProps<Props>(), {
-  todos: () => [],
+  products: () => [],
 });
-
-const clickCount = ref(0);
-function increment() {
-  clickCount.value += 1;
-  return clickCount.value;
-}
-
-const todoCount = computed(() => props.todos.length);
 </script>
